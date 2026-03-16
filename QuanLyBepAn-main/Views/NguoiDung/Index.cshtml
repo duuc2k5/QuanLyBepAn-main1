@@ -1,0 +1,48 @@
+@model IEnumerable<QuanLyBepAn.Models.NguoiDung>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Tạo mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenDangNhap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MatKhauHash)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quyen)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDangNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatKhauHash)
+            </td>
+            <td>
+                @if (item.Quyen != null)
+                {
+                    @Html.DisplayFor(modelItem => item.Quyen.TenQuyen)
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaNguoiDung" class="btn btn-primary btn-sm">Chỉnh Sửa</a>
+                <a asp-action="Details" asp-route-id="@item.MaNguoiDung" class="btn btn-info btn-sm">Chi Tiết</a>
+                <a asp-action="Delete" asp-route-id="@item.MaNguoiDung" class="btn btn-danger btn-sm">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

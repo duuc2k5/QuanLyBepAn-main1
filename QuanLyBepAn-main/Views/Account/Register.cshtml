@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Đăng ký";
+    var roles = ViewBag.Roles as List<QuanLyBepAn.Models.Quyen> ?? new();
+}
+
+<div class="container section">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center">
+                    <h2 class="m-0">Đăng ký tài khoản mới</h2>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(ViewBag.Error))
+                    {
+                        <div class="alert alert-danger">
+                            @ViewBag.Error
+                        </div>
+                    }
+                    <form asp-action="Register" method="post">
+                        <div class="form-group">
+                            <label for="username" class="form-label">Tên đăng nhập:</label>
+                            <input type="text" id="username" name="username" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mật khẩu:</label>
+                            <input type="password" id="password" name="password" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="maQuyen" class="form-label">Chọn quyền:</label>
+                            <select id="maQuyen" name="maQuyen" class="form-control" required>
+                                <option value="">-- Chọn quyền --</option>
+                                @foreach (var role in roles)
+                                {
+                                    <option value="@role.MaQuyen">@role.TenQuyen</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">Đăng ký</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Đã có tài khoản? <a href="@Url.Action("Login")">Đăng nhập tại đây</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

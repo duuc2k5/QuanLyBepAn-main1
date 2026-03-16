@@ -1,0 +1,379 @@
+@model List<QuanLyBepAn.Models.ThucDon>
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@{
+    ViewData["Title"] = "Thực đơn hàng ngày";
+}
+
+<h2>Thực đơn hàng ngày</h2>
+
+<p>
+    <form id="createMenuForm" method="post" asp-action="Create" class="d-inline">
+        <button class="btn btn-success" type="submit">
+            <i class="fas fa-plus"></i> Tạo thực đơn (ngày hiện tại)
+        </button>
+        <button id="openBmiTop" type="button" class="btn btn-info ms-2">
+            <i class="fas fa-calculator"></i> Tính BMI
+        </button>
+    </form>
+</p>
+
+<table class="table table-striped table-hover" id="tblMenus">
+    <thead class="table-dark">
+        <tr>
+            <th>Ngày áp dụng</th>
+            <th>Tổng calo</th>
+            <th class="text-center">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var td in Model)
+        {
+            <tr data-id="@td.MaThucDon">
+                <td>@td.NgayApDung.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <span class="badge bg-info">@td.TongCalo.ToString("F2")</span> kcal
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-warning btn-view-items" data-id="@td.MaThucDon" title="Xem/Chỉnh sửa">
+                        <i class="fas fa-edit"></i> Chỉnh sửa
+                    </button>
+                    <button class="btn btn-sm btn-danger btn-delete-menu" data-id="@td.MaThucDon" title="Xóa">
+                        <i class="fas fa-trash"></i> Xóa
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal Chỉnh sửa Nguyên liệu -->
+<div class="modal fade" id="itemsModal" tabindex="-1" role="dialog" aria-labelledby="itemsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="itemsModalLabel">
+                    <i class="fas fa-list"></i> Nguyên liệu
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-striped" id="tblItems">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nguyên liệu</th>
+                            <th class="text-center">Số lượng yêu cầu</th>
+                            <th class="text-center">Calo (mỗi đơn vị)</th>
+                            <th class="text-center">Số lượng tồn</th>
+                            <th class="text-center">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <hr />
+                <h6>Thêm nguyên liệu vào thực đơn</h6>
+                <form id="formAddItem" class="row g-2">
+                    <div class="col-md-5">
+                        <select id="selectNguyenLieu" class="form-select" required>
+                            <option value="">-- Chọn nguyên liệu --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" step="0.1" id="inputSoLuong" class="form-control" placeholder="Số lượng" required />
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-plus"></i> Thêm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Tính BMI -->
+<div class="modal fade" id="bmiModal" tabindex="-1" role="dialog" aria-labelledby="bmiModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="bmiModalLabel">
+                    <i class="fas fa-weight"></i> Tính chỉ số BMI
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label for="bmiHeight" class="form-label">Chiều cao (cm)</label>
+                    <input id="bmiHeight" type="number" step="0.1" class="form-control" placeholder="VD: 170" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="bmiWeight" class="form-label">Cân nặng (kg)</label>
+                    <input id="bmiWeight" type="number" step="0.1" class="form-control" placeholder="VD: 70" />
+                </div>
+                <div id="bmiCalcResult" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="bmiCalculate" class="btn btn-primary">
+                    <i class="fas fa-calculator"></i> Tính
+                </button>
+                <button id="bmiToMenu" class="btn btn-success d-none">
+                    <i class="fas fa-arrow-right"></i> Chuyển sang tạo thực đơn
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.0/signalr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        let currentMenuId = null;
+        
+        $(function() {
+            // Tải danh sách nguyên liệu vào select
+            function loadNguyenLieuOptions() {
+                $.getJSON('/api/thucdon/nguyenlieu', function(data) {
+                    const sel = $('#selectNguyenLieu');
+                    sel.find('option:not(:first)').remove();
+                    data.forEach(function(x) {
+                        sel.append(new Option(x.tenNguyenLieu + ' (' + x.calo.toFixed(2) + ' kcal)', x.maNguyenLieu));
+                    });
+                }).fail(function() {
+                    alert('Không thể tải danh sách nguyên liệu');
+                });
+            }
+
+            // Mở modal chỉnh sửa
+            $('.btn-view-items').click(function() {
+                currentMenuId = $(this).data('id');
+                loadItems(currentMenuId);
+                loadNguyenLieuOptions();
+                $('#itemsModal').modal('show');
+            });
+
+            // Thêm nguyên liệu vào thực đơn
+            $('#formAddItem').submit(function(e) {
+                e.preventDefault();
+                const maNguyenLieu = $('#selectNguyenLieu').val();
+                const soLuong = parseFloat($('#inputSoLuong').val());
+                
+                if (!maNguyenLieu || !soLuong) {
+                    alert('Vui lòng chọn nguyên liệu và nhập số lượng');
+                    return;
+                }
+
+                $.ajax({
+                    url: '/ThucDon/AddItem',
+                    method: 'POST',
+                    data: { maThucDon: currentMenuId, maNguyenLieu: maNguyenLieu, soLuong: soLuong },
+                    success: function(response) {
+                        if (response.success) {
+                            loadItems(currentMenuId);
+                            $('#inputSoLuong').val('');
+                            $('#selectNguyenLieu').val('');
+                        }
+                    },
+                    error: function(xhr) {
+                        try {
+                            const body = JSON.parse(xhr.responseText);
+                            alert('Lỗi: ' + (body.error || 'Không thể thêm nguyên liệu'));
+                        } catch(e) {
+                            alert('Lỗi: ' + xhr.statusText);
+                        }
+                    }
+                });
+            });
+
+            // Tải danh sách items
+            function loadItems(menuId) {
+                $.getJSON('/ThucDon/GetItems?id=' + menuId, function(data) {
+                    const tb = $('#tblItems tbody');
+                    tb.empty();
+                    
+                    data.forEach(function(i) {
+                        const row = $('<tr>');
+                        row.append($('<td>').text(i.tenNguyenLieu));
+                        row.append($('<td class="text-center">').append(
+                            $('<input>')
+                                .attr({ type: 'number', step: '0.1', value: i.soLuong, 'data-id': i.maThucDonItem, class: 'form-control form-control-sm input-edit-so-luong' })
+                        ));
+                        row.append($('<td class="text-center">').text(i.calo.toFixed(2)));
+                        row.append($('<td class="text-center">').html(
+                            i.soLuongTon >= 0
+                                ? '<span class="badge bg-success">' + i.soLuongTon.toFixed(2) + '</span>'
+                                : '<span class="badge bg-danger">' + i.soLuongTon.toFixed(2) + '</span>'
+                        ));
+                        row.append($('<td class="text-center">').append(
+                            $('<button>')
+                                .addClass('btn btn-sm btn-danger btn-delete-item')
+                                .html('<i class="fas fa-trash-alt"></i>')
+                                .attr('data-id', i.maThucDonItem)
+                        ));
+                        tb.append(row);
+                    });
+                }).fail(function() {
+                    alert('Không thể tải danh sách nguyên liệu');
+                });
+            }
+
+            // Chỉnh sửa số lượng
+            $('#tblItems').on('change', '.input-edit-so-luong', function() {
+                const id = $(this).data('id');
+                const soLuong = parseFloat($(this).val());
+
+                if (soLuong <= 0) {
+                    alert('Số lượng phải lớn hơn 0');
+                    loadItems(currentMenuId);
+                    return;
+                }
+
+                $.ajax({
+                    url: '/ThucDon/EditItem',
+                    method: 'POST',
+                    data: { id: id, soLuong: soLuong },
+                    success: function(response) {
+                        if (!response.success) {
+                            loadItems(currentMenuId);
+                        }
+                    },
+                    error: function(xhr) {
+                        try {
+                            const body = JSON.parse(xhr.responseText);
+                            alert('Lỗi: ' + (body.error || 'Không thể cập nhật'));
+                        } catch(e) {
+                            alert('Lỗi: ' + xhr.statusText);
+                        }
+                        loadItems(currentMenuId);
+                    }
+                });
+            });
+
+            // Xóa item
+            $('#tblItems').on('click', '.btn-delete-item', function() {
+                if (!confirm('Bạn có chắc muốn xóa nguyên liệu này?')) return;
+                
+                const id = $(this).data('id');
+                $.ajax({
+                    url: '/ThucDon/DeleteItem',
+                    method: 'POST',
+                    data: { id: id },
+                    success: function() {
+                        loadItems(currentMenuId);
+                    },
+                    error: function(xhr) {
+                        try {
+                            const body = JSON.parse(xhr.responseText);
+                            alert('Lỗi: ' + (body.error || 'Không thể xóa'));
+                        } catch(e) {
+                            alert('Lỗi: ' + xhr.statusText);
+                        }
+                    }
+                });
+            });
+
+            // SignalR - Cập nhật real-time
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl('/thucdonHub')
+                .withAutomaticReconnect()
+                .build();
+
+            connection.on('MenuUpdated', function(payload) {
+                if (currentMenuId) {
+                    loadItems(currentMenuId);
+                } else {
+                    location.reload();
+                }
+            });
+
+            // Xóa thực đơn
+            $('#tblMenus').on('click', '.btn-delete-menu', function() {
+                if (!confirm('Bạn có chắc muốn xóa thực đơn này?')) return;
+                
+                const id = $(this).data('id');
+                $.ajax({
+                    url: '/ThucDon/Delete',
+                    method: 'POST',
+                    data: { id: id },
+                    success: function() {
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        let msg = xhr.statusText;
+                        try {
+                            const body = JSON.parse(xhr.responseText);
+                            if (body && body.error) msg = body.error;
+                        } catch(e) { }
+                        alert('Xóa thất bại: ' + msg);
+                    }
+                });
+            });
+
+            connection.start().catch(function(err) {
+                console.error('SignalR Error:', err.toString());
+            });
+        });
+
+        // BMI Calculator
+        $(function() {
+            let lastBmi = null;
+            
+            $('#openBmiTop').on('click', function() {
+                $('#bmiHeight').val('');
+                $('#bmiWeight').val('');
+                $('#bmiCalcResult').addClass('d-none').html('');
+                $('#bmiToMenu').addClass('d-none');
+                lastBmi = null;
+                $('#bmiModal').modal('show');
+            });
+
+            $('#bmiCalculate').click(function() {
+                const h = parseFloat($('#bmiHeight').val()) / 100.0;
+                const w = parseFloat($('#bmiWeight').val());
+                
+                if (!h || !w || h <= 0 || w <= 0) {
+                    alert('Vui lòng nhập chiều cao và cân nặng hợp lệ');
+                    return;
+                }
+
+                const bmi = w / (h * h);
+                lastBmi = bmi;
+                
+                let cat = '';
+                let color = 'info';
+                
+                if (bmi < 18.5) {
+                    cat = 'Gầy (thiếu cân)';
+                    color = 'warning';
+                } else if (bmi < 25) {
+                    cat = 'Bình thường';
+                    color = 'success';
+                } else if (bmi < 30) {
+                    cat = 'Thừa cân';
+                    color = 'warning';
+                } else {
+                    cat = 'Béo phì';
+                    color = 'danger';
+                }
+
+                const resultHtml = `<strong>BMI: ${bmi.toFixed(2)}</strong><br/>Phân loại: <strong>${cat}</strong>`;
+                $('#bmiCalcResult')
+                    .removeClass('alert-info alert-warning alert-success alert-danger')
+                    .addClass('alert-' + color)
+                    .html(resultHtml)
+                    .removeClass('d-none');
+                
+                $('#bmiToMenu').removeClass('d-none');
+            });
+
+            $('#bmiToMenu').click(function() {
+                if (!lastBmi) return;
+                const v = lastBmi.toFixed(2);
+                window.location.href = '/BepTruong?bmi=' + encodeURIComponent(v);
+            });
+        });
+    </script>
+}
+

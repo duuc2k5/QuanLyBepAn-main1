@@ -1,0 +1,155 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFramework = net10.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.RootNamespace = QuanLyBepAn
+build_property.RootNamespace = QuanLyBepAn
+build_property.ProjectDir = C:\Users\Ducky\Downloads\QuanLyBepAn-main1\QuanLyBepAn-main\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Ducky\Downloads\QuanLyBepAn-main1\QuanLyBepAn-main
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Admin/MealCalculator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWVhbENhbGN1bGF0b3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/BepTruong/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVwVHJ1b25nXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Bmi/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm1pXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Home/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2Nlc3NEZW5pZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Kho/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2hvXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Kho/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2hvXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Kho/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2hvXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Kho/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2hvXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Kho/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2hvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguoiDung/ConfirmAdminKey.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1b2lEdW5nXENvbmZpcm1BZG1pbktleS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguoiDung/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1b2lEdW5nXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguoiDung/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1b2lEdW5nXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguoiDung/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1b2lEdW5nXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguoiDung/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1b2lEdW5nXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguoiDung/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1b2lEdW5nXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguyenLieu/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1eWVuTGlldVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguyenLieu/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1eWVuTGlldVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguyenLieu/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1eWVuTGlldVxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguyenLieu/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1eWVuTGlldVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NguyenLieu/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmd1eWVuTGlldVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/NhatKyHeThong/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmhhdEt5SGVUaG9uZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/ThucDon/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGh1Y0RvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ducky/Downloads/QuanLyBepAn-main1/QuanLyBepAn-main/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

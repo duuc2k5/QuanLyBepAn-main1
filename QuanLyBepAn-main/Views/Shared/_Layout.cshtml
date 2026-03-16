@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý Bếp ăn - @ViewData["Title"]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="" crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand navbar-dark bg-transparent py-3 shadow-sm">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center">
+                    <button id="sidebarToggle" class="btn btn-light me-3 d-md-none"><i class="fas fa-bars"></i></button>
+                    <a class="navbar-brand me-4 d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                        <img src="~/img/chef-logo.svg" alt="Chef Logo" class="me-2" style="height: 40px; width: auto;">
+                        <span>Quản lý Bếp ăn</span>
+                    </a>
+                </div>
+                <div class="d-flex align-items-center ms-auto">
+                    <div class="me-3 text-white d-none d-md-block small">@Context.Session.GetString("User")</div>
+                    <a class="btn btn-outline-light btn-logout" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="app-layout d-flex">
+        <aside class="sidebar bg-light shadow-sm">
+            <div class="sidebar-header p-4 d-flex align-items-center">
+                <div class="me-2 logo-icon rounded bg-primary text-white d-flex align-items-center justify-content-center" style="width:44px;height:44px">Q</div>
+                <div>
+                    <div class="h6 mb-0">Quản lý Bếp ăn</div>
+                    <small class="text-muted">Hệ thống nội bộ</small>
+                </div>
+            </div>
+            <nav class="nav flex-column p-3">
+                <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fas fa-home me-2"></i>Trang chủ</a>
+                @if (Context.Session.GetString("Quyen") == "Admin")
+                {
+                    <a class="nav-link" asp-controller="NguoiDung" asp-action="Index"><i class="fas fa-users me-2"></i>Người dùng</a>
+                    <a class="nav-link" asp-controller="NhatKyHeThong" asp-action="Index"><i class="fas fa-book me-2"></i>Nhật ký</a>
+                    <a class="nav-link" asp-controller="Admin" asp-action="MealCalculator"><i class="fas fa-utensils me-2"></i>Tính suất ăn</a>
+                }
+                @{
+                    var role = Context.Session.GetString("Quyen");
+                }
+                @if (role == "Bếp trưởng")
+                {
+                    <a class="nav-link" asp-controller="NguyenLieu" asp-action="Index"><i class="fas fa-leaf me-2"></i>Nguyên liệu</a>
+                    <a class="nav-link" asp-controller="ThucDon" asp-action="Index"><i class="fas fa-calendar-day me-2"></i>Thực đơn</a>
+                }
+                @if (role == "Thủ kho" || role == "Admin")
+                {
+                    <a class="nav-link" asp-controller="Kho" asp-action="Index"><i class="fas fa-warehouse me-2"></i>Kho</a>
+                }
+            </nav>
+            <div class="sidebar-footer p-3 mt-auto">
+                <small class="text-muted">Version 1.0</small>
+            </div>
+        </aside>
+
+        <main class="content flex-fill p-4">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

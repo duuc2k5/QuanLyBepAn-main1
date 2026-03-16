@@ -1,0 +1,263 @@
+@{
+    Layout = "_Layout";
+}
+
+<h2>Bếp trưởng — Công cụ tạo thực đơn & BMI</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card p-3 mb-3">
+            <h5>Tính BMI</h5>
+            <div class="form-group">
+                <label>Chiều cao (cm)</label>
+                <input id="height" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Cân nặng (kg)</label>
+                <input id="weight" class="form-control" />
+            </div>
+            <button id="calcBmi" class="btn btn-primary mt-2">Tính BMI</button>
+            <div id="bmiResult" class="mt-2 font-weight-bold"></div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card p-3">
+            <h5>Danh sách món (sắp xếp, tạo thực đơn)</h5>
+            <h6>Nhập thực đơn chi tiết (Cơm, Thịt, Rau)</h6>
+            <div class="form-row mb-2">
+                <div class="form-group col-md-4">
+                    <label>Chọn cơm</label>
+                    <select id="riceSelect" class="form-control">
+                        <option value="">-- Chọn --</option>
+                        @foreach(var n in (List<QuanLyBepAn.Models.NguyenLieu>)ViewBag.NguyenLieu)
+                        {
+                            <option value="@n.MaNguyenLieu">@n.TenNguyenLieu</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>G (g)</label>
+                    <input id="riceGrams" type="number" class="form-control" value="200" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label>Chọn thịt</label>
+                    <select id="meatSelect" class="form-control">
+                        <option value="">-- Chọn --</option>
+                        @foreach(var n in (List<QuanLyBepAn.Models.NguyenLieu>)ViewBag.NguyenLieu)
+                        {
+                            <option value="@n.MaNguyenLieu">@n.TenNguyenLieu</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Lạng</label>
+                    <input id="meatLang" type="number" class="form-control" value="1" />
+                </div>
+            </div>
+
+            <div class="form-row mb-2">
+                <div class="form-group col-md-4">
+                    <label>Chọn rau</label>
+                    <select id="vegSelect" class="form-control">
+                        <option value="">-- Chọn --</option>
+                        @foreach(var n in (List<QuanLyBepAn.Models.NguyenLieu>)ViewBag.NguyenLieu)
+                        {
+                            <option value="@n.MaNguyenLieu">@n.TenNguyenLieu</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>G (g)</label>
+                    <input id="vegGrams" type="number" class="form-control" value="100" />
+                </div>
+                <div class="form-group col-md-6 align-self-end">
+                    <button id="computeNutrition" class="btn btn-info">Tính dinh dưỡng</button>
+                    <span id="nutritionResult" class="ml-3"></span>
+                </div>
+            </div>
+
+            <div class="d-flex mb-2">
+                <input id="dishName" placeholder="Tên món" class="form-control mr-2" />
+                <input id="dishCalo" placeholder="Calo" class="form-control mr-2" />
+                <button id="addDish" class="btn btn-success">Thêm</button>
+            </div>
+
+            <table class="table table-sm" id="dishesTable">
+                <thead><tr><th>#</th><th>Tên</th><th>Calo</th><th>Hành động</th></tr></thead>
+                <tbody></tbody>
+            </table>
+
+            <div class="mt-2">
+                <button id="createMenu" class="btn btn-primary">Tạo thực đơn</button>
+                <button id="createAndExport" class="btn btn-success ml-2">Tạo và Xuất PDF (kèm BMI)</button>
+                <button id="downloadPdf" class="btn btn-outline-primary ml-2" disabled>Tải PDF</button>
+                <a id="exportLink" class="btn btn-outline-secondary d-none" target="_blank">Xuất PDF</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // BMI
+        var initialBmi = @(ViewBag.Bmi != null ? ViewBag.Bmi.ToString().Replace(",", ".") : "null");
+        var lastMenuId = null;
+
+        $('#calcBmi').click(function () {
+            var h = parseFloat($('#height').val()) / 100.0;
+            var w = parseFloat($('#weight').val());
+            if (!h || !w) { $('#bmiResult').text('Nhập chiều cao và cân nặng hợp lệ'); return; }
+            var bmi = w / (h * h);
+            $('#bmiResult').text('BMI: ' + bmi.toFixed(2));
+        });
+
+        function refreshTable() {
+            $('#dishesTable tbody').empty();
+            $('#dishesTable tbody').find('tr').remove();
+            var items = window._dishes || [];
+            for (var i = 0; i < items.length; i++) {
+                var r = $('<tr>');
+                r.append('<td>' + (i+1) + '</td>');
+                r.append('<td>' + items[i].Name + '</td>');
+                r.append('<td>' + items[i].Calo + '</td>');
+                var actions = $('<td>');
+                actions.append('<button class="btn btn-sm btn-secondary up">▲</button> ');
+                actions.append('<button class="btn btn-sm btn-secondary down">▼</button> ');
+                actions.append('<button class="btn btn-sm btn-danger remove">Xóa</button>');
+                r.append(actions);
+                $('#dishesTable tbody').append(r);
+            }
+        }
+
+        window._dishes = [];
+        // If BMI was passed from the BMI page, suggest simple dishes and prefill the table
+        (function(){
+            var initialBmi = @(ViewBag.Bmi != null ? ViewBag.Bmi.ToString().Replace(",", ".") : "null");
+            if (initialBmi) {
+                var bmiVal = parseFloat(initialBmi);
+                var suggestions = [];
+                if (bmiVal < 18.5) {
+                    suggestions = [
+                        { Name: 'Bữa tăng cân - Cháo dinh dưỡng', Calo: 600 },
+                        { Name: 'Sữa năng lượng', Calo: 250 }
+                    ];
+                } else if (bmiVal < 25) {
+                    suggestions = [
+                        { Name: 'Bữa cân đối - Salad + Thịt', Calo: 450 },
+                        { Name: 'Súp gà', Calo: 300 }
+                    ];
+                } else if (bmiVal < 30) {
+                    suggestions = [
+                        { Name: 'Bữa giảm cân - Rau + Thịt', Calo: 350 },
+                        { Name: 'Canh rau', Calo: 150 }
+                    ];
+                } else {
+                    suggestions = [
+                        { Name: 'Bữa ít calo - Salad lớn', Calo: 300 },
+                        { Name: 'Súp rau', Calo: 120 }
+                    ];
+                }
+                suggestions.forEach(function(s){ window._dishes.push(s); });
+                if (typeof refreshTable === 'function') refreshTable();
+            }
+        })();
+        $('#addDish').click(function () {
+            var name = $('#dishName').val();
+            var cal = parseFloat($('#dishCalo').val()) || 0;
+            if (!name) return alert('Nhập tên món');
+            window._dishes.push({ Name: name, Calo: cal });
+            $('#dishName').val(''); $('#dishCalo').val('');
+            refreshTable();
+        });
+
+        $('#dishesTable').on('click', '.remove', function () {
+            var idx = $(this).closest('tr').index();
+            window._dishes.splice(idx, 1);
+            refreshTable();
+        });
+        $('#dishesTable').on('click', '.up', function () {
+            var idx = $(this).closest('tr').index();
+            if (idx <= 0) return;
+            var a = window._dishes[idx]; window._dishes.splice(idx,1); window._dishes.splice(idx-1,0,a); refreshTable();
+        });
+        $('#dishesTable').on('click', '.down', function () {
+            var idx = $(this).closest('tr').index();
+            if (idx >= window._dishes.length-1) return;
+            var a = window._dishes[idx]; window._dishes.splice(idx,1); window._dishes.splice(idx+1,0,a); refreshTable();
+        });
+
+        $('#createMenu').click(function () {
+            if (!window._dishes.length) return alert('Danh sách trống');
+            $.ajax({
+                url: '/BepTruong/CreateMenu',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ Items: window._dishes })
+            }).done(function (res) {
+                alert('Tạo thực đơn xong. ID: ' + res.id);
+                lastMenuId = res.id;
+                var href = '/BepTruong/ExportPdf?id=' + res.id;
+                if (initialBmi) href += '&bmi=' + encodeURIComponent(initialBmi);
+                $('#exportLink').removeClass('d-none').attr('href', href);
+                $('#downloadPdf').prop('disabled', false);
+            }).fail(function (xhr) { alert('Lỗi: ' + xhr.responseText); });
+        });
+
+        $('#createAndExport').click(function (){
+            if (!window._dishes.length) return alert('Danh sách trống');
+            $.ajax({
+                url: '/BepTruong/CreateMenu',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ Items: window._dishes })
+            }).done(function (res) {
+                lastMenuId = res.id;
+                var href = '/BepTruong/ExportPdf?id=' + res.id;
+                if (initialBmi) href += '&bmi=' + encodeURIComponent(initialBmi);
+                // trigger download
+                var win = window.open(href, '_blank');
+                if (!win) {
+                    // fallback: create link
+                    $('#exportLink').removeClass('d-none').attr('href', href).get(0).click();
+                }
+                $('#downloadPdf').prop('disabled', false);
+            }).fail(function (xhr) { alert('Lỗi: ' + xhr.responseText); });
+        });
+
+        // Nutrition compute
+        $('#computeNutrition').click(function(){
+            var data = {
+                RiceId: parseInt($('#riceSelect').val()) || null,
+                RiceGrams: parseInt($('#riceGrams').val()) || 0,
+                MeatId: parseInt($('#meatSelect').val()) || null,
+                MeatLang: parseInt($('#meatLang').val()) || 0,
+                VegId: parseInt($('#vegSelect').val()) || null,
+                VegGrams: parseInt($('#vegGrams').val()) || 0
+            };
+            $.ajax({
+                url: '/BepTruong/ComputeNutrition',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data)
+            }).done(function(res){
+                var html = '<strong>Calo:</strong> ' + res.totalCalo + ' kcal, <strong>Protein:</strong> ' + res.totalProtein + ' g, <strong>Lipid:</strong> ' + res.totalLipid + ' g';
+                if (res.warnings && res.warnings.length) {
+                    html += '<br/><span class="text-danger">' + res.warnings.join('<br/>') + '</span>';
+                }
+                $('#nutritionResult').html(html);
+            }).fail(function(xhr){
+                alert('Lỗi khi tính dinh dưỡng: ' + xhr.responseText);
+            });
+        });
+
+        $('#downloadPdf').click(function(){
+            if (!lastMenuId) return alert('Chưa có thực đơn để tải. Hãy tạo thực đơn trước.');
+            var href = '/BepTruong/ExportPdf?id=' + lastMenuId;
+            if (initialBmi) href += '&bmi=' + encodeURIComponent(initialBmi);
+            // navigate to URL to trigger download
+            window.location.href = href;
+        });
+    </script>
+}

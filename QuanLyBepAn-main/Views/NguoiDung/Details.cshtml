@@ -1,0 +1,39 @@
+@model QuanLyBepAn.Models.NguoiDung
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Chi Tiết</h1>
+
+<div>
+    <h4>Người Dùng</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TenDangNhap)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenDangNhap)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MatKhauHash)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MatKhauHash)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Quyen)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.Quyen != null)
+            {
+                @Html.DisplayFor(model => model.Quyen!.TenQuyen)
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.MaNguoiDung" class="btn btn-primary btn-sm">Chỉnh Sửa</a> |
+    <a asp-action="Index" class="btn btn-secondary btn-sm">QUAY LẠI DANH SÁCH</a>
+</div>

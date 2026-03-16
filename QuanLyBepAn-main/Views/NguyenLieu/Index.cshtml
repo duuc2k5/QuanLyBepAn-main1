@@ -1,0 +1,55 @@
+@model IEnumerable<QuanLyBepAn.Models.NguyenLieu>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <!-- Creation disabled; NguyenLieu is read-only for Bếp trưởng -->
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenNguyenLieu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cali)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiaTriDinhDuong)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenNguyenLieu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cali)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaTriDinhDuong)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.MaNguyenLieu" class="btn btn-info btn-sm">Chi Tiết</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

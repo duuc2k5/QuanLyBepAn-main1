@@ -1,0 +1,61 @@
+@model IEnumerable<QuanLyBepAn.Models.Kho>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nguyên liệu</th>
+            <th>Số Calo</th>
+            <th>Đạm</th>
+            <th>Cali</th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuongTon)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @if (item.NguyenLieu != null)
+                {
+                    @Html.DisplayFor(modelItem => item.NguyenLieu.TenNguyenLieu)
+                }
+            </td>
+            <td>
+                @if (item.NguyenLieu != null)
+                {
+                    @Html.DisplayFor(modelItem => item.NguyenLieu.Calo)
+                }
+            </td>
+            <td>
+                @if (item.NguyenLieu != null)
+                {
+                    @Html.DisplayFor(modelItem => item.NguyenLieu.Dam)
+                }
+            </td>
+            <td>
+                @if (item.NguyenLieu != null)
+                {
+                    @Html.DisplayFor(modelItem => item.NguyenLieu.Cali)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuongTon)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaKho" class="btn btn-primary btn-sm">Chỉnh Sửa</a>
+                <a asp-action="Details" asp-route-id="@item.MaKho" class="btn btn-info btn-sm">Chi Tiết</a>
+                <a asp-action="Delete" asp-route-id="@item.MaKho" class="btn btn-danger btn-sm">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,56 @@
+@model QuanLyBepAn.Models.MealCalculatorViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Tính suất ăn hàng ngày";
+}
+
+<h2>Tính suất ăn hàng ngày (Admin)</h2>
+
+<form asp-action="MealCalculator" method="post">
+    <div class="form-group">
+        <label>Số trẻ đi học</label>
+        <input asp-for="NumberOfChildren" class="form-control" />
+        <span asp-validation-for="NumberOfChildren" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Số bữa/ngày (mỗi trẻ)</label>
+        <input asp-for="MealsPerDay" class="form-control" />
+        <span asp-validation-for="MealsPerDay" class="text-danger"></span>
+    </div>
+
+    <h5>Khẩu phần mặc định (gram / 1 phần)</h5>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>Gạo (g)</label>
+            <input asp-for="RicePerPortionGrams" class="form-control" />
+        </div>
+        <div class="form-group col-md-4">
+            <label>Thịt (lạng)</label>
+            <input asp-for="MeatPerPortionLang" class="form-control" />
+            <small class="form-text text-muted">Lưu ý: 1 lạng = 0.1 kg (100 g)</small>
+        </div>
+        <div class="form-group col-md-4">
+            <label>Rau (g)</label>
+            <input asp-for="VegPerPortionGrams" class="form-control" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Tính</button>
+</form>
+
+@if (Model != null && Model.TotalPortions > 0)
+{
+    <hr />
+    <h4>Kết quả</h4>
+    <ul>
+        <li>Tổng suất: <strong>@Model.TotalPortions</strong></li>
+        <li>Tổng gạo: <strong>@Model.TotalRiceKg.ToString("0.00") kg</strong></li>
+        <li>Tổng thịt: <strong>@Model.TotalMeatKg.ToString("0.00") kg</strong></li>
+        <li>Tổng rau: <strong>@Model.TotalVegKg.ToString("0.00") kg</strong></li>
+        <li>Tổng thực phẩm: <strong>@Model.TotalFoodKg.ToString("0.00") kg</strong></li>
+    </ul>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

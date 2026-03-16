@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý Bếp ăn - &#x110;&#x103;ng k&#xFD;</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body>
+    <header b-jma64i8tpk>
+        <nav b-jma64i8tpk class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div b-jma64i8tpk class="container">
+                <a class="navbar-brand" href="/">Quản lý Bếp ăn</a>
+                <button b-jma64i8tpk class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span b-jma64i8tpk class="navbar-toggler-icon"></span>
+                </button>
+                <div b-jma64i8tpk class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul b-jma64i8tpk class="navbar-nav flex-grow-1">
+                        <li b-jma64i8tpk class="nav-item">
+                            <a class="nav-link text-dark" href="/">Trang chủ</a>
+                        </li>
+
+
+
+
+                    </ul>
+
+                    <ul b-jma64i8tpk class="navbar-nav">
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div b-jma64i8tpk class="container">
+        <main b-jma64i8tpk role="main" class="pb-3">
+            
+<div class="container section">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center">
+                    <h2 class="m-0">Đăng ký tài khoản mới</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="/Account/Register">
+                        <div class="form-group">
+                            <label for="username" class="form-label">Tên đăng nhập:</label>
+                            <input type="text" id="username" name="username" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mật khẩu:</label>
+                            <input type="password" id="password" name="password" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="maQuyen" class="form-label">Chọn quyền:</label>
+                            <select id="maQuyen" name="maQuyen" class="form-control" required>
+                                <option value="">-- Chọn quyền --</option>
+                                    <option value="1">B&#x1EBF;p tr&#x1B0;&#x1EDF;ng</option>
+                                    <option value="2">Th&#x1EE7; kho</option>
+                                    <option value="3">Admin</option>
+                            </select>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">Đăng ký</button>
+                        </div>
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8BJZbZQ0Ua9MljlDN7BUrXyXXY6N4YUcuSov6rX3GO6BtG4Gtt77GqB-Q0OJDPfkXngiE0CLF1k3O0nbX_9ghTOtbWrZJotH9pHiRFdmeYIW6_ALh1DyUsUsVSyr8iy6PXMYe-X1j9jaI_59Zmm3J6k" /></form>
+                    <div class="text-center mt-3">
+                        <p>Đã có tài khoản? <a href="/Account/Login">Đăng nhập tại đây</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </main>
+    </div>
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js?v=y_Ngd8W21UpuCUhEqGbUKDEqFnNfTjAfb24GhJJGUyM"></script>
+    
+</body>
+</html>

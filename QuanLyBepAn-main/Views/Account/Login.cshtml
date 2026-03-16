@@ -1,0 +1,37 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="container section">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center">
+                    <h2 class="m-0">Đăng nhập hệ thống</h2>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null) {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="username" class="form-label">Tên đăng nhập:</label>
+                            <input type="text" id="username" name="username" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mật khẩu:</label>
+                            <input type="password" id="password" name="password" class="form-control" required />
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-2">
+                        <p>Chưa có tài khoản? <a asp-controller="Account" asp-action="Register">Đăng ký ngay</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

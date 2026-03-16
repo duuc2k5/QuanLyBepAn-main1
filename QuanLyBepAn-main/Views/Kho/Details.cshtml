@@ -1,0 +1,33 @@
+@model QuanLyBepAn.Models.Kho
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Kho</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NguyenLieu)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.NguyenLieu != null)
+            {
+                @Html.DisplayFor(model => model.NguyenLieu!.MaNguyenLieu)
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SoLuongTon)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SoLuongTon)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.MaKho" class="btn btn-primary btn-sm">Chỉnh Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary btn-sm">QUAY LẠI DANH SÁCH</a>
+</div>

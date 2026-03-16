@@ -1,0 +1,48 @@
+@model QuanLyBepAn.Models.NguyenLieu
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>NguyenLieu</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TenNguyenLieu)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenNguyenLieu)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GiaTriDinhDuong)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GiaTriDinhDuong)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Calo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Calo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Dam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Dam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cali)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cali)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.MaNguyenLieu" class="btn btn-primary btn-sm">Chỉnh Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary btn-sm">QUAY LẠI DANH SÁCH</a>
+</div>

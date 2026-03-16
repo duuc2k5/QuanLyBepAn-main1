@@ -1,0 +1,55 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="58" fill="#FFD93D" opacity="0.9"/>
+  
+  <!-- Chef hat (white) -->
+  <ellipse cx="60" cy="25" rx="28" ry="12" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+  <path d="M 32 25 Q 32 15 60 8 Q 88 15 88 25" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+  
+  <!-- Hat decorations (balls) -->
+  <circle cx="45" cy="12" r="5" fill="#F0F0F0" stroke="#333" stroke-width="1.5"/>
+  <circle cx="60" cy="8" r="6" fill="#F0F0F0" stroke="#333" stroke-width="1.5"/>
+  <circle cx="75" cy="12" r="5" fill="#F0F0F0" stroke="#333" stroke-width="1.5"/>
+  
+  <!-- Head (skin tone) -->
+  <circle cx="60" cy="50" r="18" fill="#F4A460" stroke="#333" stroke-width="2"/>
+  
+  <!-- Eyes -->
+  <circle cx="52" cy="46" r="2.5" fill="#333"/>
+  <circle cx="68" cy="46" r="2.5" fill="#333"/>
+  
+  <!-- Wink eye (right) -->
+  <path d="M 68 46 Q 71 47 68 48" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Smile -->
+  <path d="M 54 52 Q 60 55 66 52" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Body (blue shirt) -->
+  <rect x="40" y="65" width="40" height="30" rx="5" fill="#4A90E2" stroke="#333" stroke-width="2"/>
+  
+  <!-- Left arm -->
+  <rect x="20" y="70" width="20" height="12" rx="6" fill="#F4A460" stroke="#333" stroke-width="1.5" transform="rotate(-20 30 76)"/>
+  
+  <!-- Right arm (holding utensil) -->
+  <rect x="80" y="70" width="20" height="12" rx="6" fill="#F4A460" stroke="#333" stroke-width="1.5" transform="rotate(35 90 76)"/>
+  
+  <!-- Spoon/Spatula in hand -->
+  <line x1="95" y1="55" x2="105" y2="35" stroke="#E74C3C" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="108" cy="32" r="5" fill="#E74C3C" stroke="#333" stroke-width="1.5"/>
+  
+  <!-- Cooking pot (orange) -->
+  <ellipse cx="50" cy="85" rx="15" ry="18" fill="#FF6B35" stroke="#333" stroke-width="2"/>
+  
+  <!-- Pot lid -->
+  <path d="M 35 82 Q 50 70 65 82" fill="#FFB13D" stroke="#333" stroke-width="2"/>
+  
+  <!-- Flame effect (red/yellow) -->
+  <path d="M 48 70 Q 45 60 50 55 Q 52 62 48 70" fill="#FF4444" opacity="0.8"/>
+  <path d="M 52 72 Q 50 60 55 52 Q 57 64 52 72" fill="#FFD93D" opacity="0.8"/>
+  <path d="M 56 70 Q 54 62 58 55 Q 60 64 56 70" fill="#FF4444" opacity="0.8"/>
+  
+  <!-- Food splashes (decorative) -->
+  <circle cx="38" cy="65" r="2" fill="#FF6B35" opacity="0.6"/>
+  <circle cx="42" cy="60" r="1.5" fill="#FF4444" opacity="0.6"/>
+  <circle cx="35" cy="70" r="1.5" fill="#FFD93D" opacity="0.6"/>
+</svg>

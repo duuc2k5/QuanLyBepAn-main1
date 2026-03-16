@@ -1,0 +1,43 @@
+@model QuanLyBepAn.Models.NguoiDung
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Chỉnh Sửa</h1>
+
+<h4>Người Dùng</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="MaNguoiDung" />
+            <div class="form-group">
+                <label asp-for="TenDangNhap" class="form-label"></label>
+                <input asp-for="TenDangNhap" class="form-control" required />
+                <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MatKhauHash" class="form-label"></label>
+                <input asp-for="MatKhauHash" class="form-control" required />
+                <span asp-validation-for="MatKhauHash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaQuyen" class="form-label"></label>
+                <select asp-for="MaQuyen" class="form-control" asp-items="ViewBag.MaQuyen" required></select>
+                <span asp-validation-for="MaQuyen" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Lưu Lại" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary btn-sm">QUAY LẠI DANH SÁCH</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

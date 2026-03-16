@@ -1,0 +1,42 @@
+@model QuanLyBepAn.Models.NguoiDung
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Xóa</h1>
+
+<h3>Bạo có chắc muốn xóa không?</h3>
+<div>
+    <h4>Người Dùng</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TenDangNhap)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenDangNhap)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MatKhauHash)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MatKhauHash)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Quyen)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.Quyen != null)
+            {
+                @Html.DisplayFor(model => model.Quyen!.TenQuyen)
+            }
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="MaNguoiDung" />
+        <input type="submit" value="Xóa" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary btn-sm">QUAY LẠI DANH SÁCH</a>
+    </form>
+</div>

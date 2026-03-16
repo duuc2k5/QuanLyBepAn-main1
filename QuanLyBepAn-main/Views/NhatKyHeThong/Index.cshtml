@@ -1,0 +1,54 @@
+@model IEnumerable<QuanLyBepAn.Models.NhatKyHeThong>
+
+@{
+    ViewData["Title"] = "Nhật Ký Hệ Thống";
+}
+
+<div class="container section">
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MaLog)
+                    </th>
+                    <th>
+                        Người Dùng
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HanhDong)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ThoiGian)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+@foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaLog)
+                    </td>
+                    <td>
+                        @if (item.NguoiDung != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.NguoiDung.TenDangNhap)
+                        }
+                    </td>
+                    <td>
+                        <span class="blue-frame">@Html.DisplayFor(modelItem => item.HanhDong)</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThoiGian)
+                    </td>
+                </tr>
+}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

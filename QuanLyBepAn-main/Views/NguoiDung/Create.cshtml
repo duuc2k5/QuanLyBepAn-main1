@@ -1,0 +1,157 @@
+@model QuanLyBepAn.Models.NguoiDung
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Tạo Mới</h1>
+
+<h4>Người Dùng</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="createForm" asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (TempData["AdminKeyError"] != null)
+            {
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle"></i> @TempData["AdminKeyError"]
+                </div>
+            }
+            
+            <div class="form-group">
+                <label asp-for="TenDangNhap" class="control-label"></label>
+                <input asp-for="TenDangNhap" class="form-control" id="tenDangNhap" />
+                <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="MatKhauHash" class="control-label"></label>
+                <input asp-for="MatKhauHash" type="password" class="form-control" id="matKhau" />
+                <span asp-validation-for="MatKhauHash" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="MaQuyen" class="control-label">Quyền</label>
+                <select asp-for="MaQuyen" class="form-control" asp-items="ViewBag.MaQuyen" id="quyenSelect">
+                    <option value="">-- Chọn quyền --</option>
+                </select>
+                <span asp-validation-for="MaQuyen" class="text-danger"></span>
+                <small class="text-muted d-block mt-2" id="adminWarning" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i> Nếu chọn Admin, sẽ cần xác nhận bằng Admin Key
+                </small>
+            </div>
+            
+            <div class="form-group mt-3">
+                <input type="submit" id="submitBtn" value="Tạo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary btn-sm">QUAY LẠI DANH SÁCH</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quyenSelect = document.getElementById('quyenSelect');
+            const createForm = document.getElementById('createForm');
+            const adminWarning = document.getElementById('adminWarning');
+            const tenDangNhap = document.getElementById('tenDangNhap');
+            const matKhau = document.getElementById('matKhau');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            let adminMaQuyen = null;
+            
+            // Lấy MaQuyen của Admin từ dropdown options
+            function getAdminMaQuyen() {
+                for (let i = 0; i < quyenSelect.options.length; i++) {
+                    const text = quyenSelect.options[i].text.toLowerCase();
+                    if (text.includes('admin')) {
+                        return quyenSelect.options[i].value;
+                    }
+                }
+                return null;
+            }
+            
+            adminMaQuyen = getAdminMaQuyen();
+            
+            function checkAdminRole() {
+                const selectedText = quyenSelect.options[quyenSelect.selectedIndex].text;
+                const isAdmin = selectedText.toLowerCase().includes('admin');
+                
+                if (isAdmin) {
+                    adminWarning.style.display = 'block';
+                    submitBtn.value = 'Tiếp tục với Admin';
+                } else {
+                    adminWarning.style.display = 'none';
+                    submitBtn.value = 'Tạo';
+                }
+            }
+            
+            quyenSelect.addEventListener('change', checkAdminRole);
+            
+            // Intercept form submit
+            createForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const selectedMaQuyen = quyenSelect.value;
+                const isAdmin = selectedMaQuyen === adminMaQuyen;
+                
+                if (!tenDangNhap.value.trim()) {
+                    alert('Vui lòng nhập tên đăng nhập');
+                    tenDangNhap.focus();
+                    return;
+                }
+                
+                if (!matKhau.value.trim()) {
+                    alert('Vui lòng nhập mật khẩu');
+                    matKhau.focus();
+                    return;
+                }
+                
+                if (!selectedMaQuyen) {
+                    alert('Vui lòng chọn quyền');
+                    quyenSelect.focus();
+                    return;
+                }
+                
+                if (isAdmin) {
+                    // Nếu là Admin, lưu vào session rồi redirect
+                    // Include antiforgery token in AJAX request
+                    const afTokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
+                    const afToken = afTokenInput ? afTokenInput.value : null;
+
+                    fetch('/NguoiDung/StoreAdminData', {
+                        method: 'POST',
+                        headers: Object.assign({
+                            'Content-Type': 'application/json'
+                        }, afToken ? { 'RequestVerificationToken': afToken } : {}),
+                        body: JSON.stringify({
+                            tenDangNhap: tenDangNhap.value,
+                            matKhau: matKhau.value,
+                            maQuyen: selectedMaQuyen
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = '/NguoiDung/ConfirmAdminKey';
+                        } else {
+                            alert('Có lỗi xảy ra, vui lòng thử lại');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Lỗi: ' + error);
+                    });
+                } else {
+                    // Nếu không phải Admin, submit form bình thường
+                    createForm.submit();
+                }
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,39 @@
+@model QuanLyBepAn.Models.Kho
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa";
+}
+
+<h1>Chỉnh Sửa</h1>
+
+<h4>Kho</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="MaKho" />
+            <div class="form-group">
+                <label asp-for="MaNguyenLieu" class="form-label"></label>
+                <select asp-for="MaNguyenLieu" class="form-control" asp-items="ViewBag.MaNguyenLieu" required></select>
+                <span asp-validation-for="MaNguyenLieu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuongTon" class="form-label"></label>
+                <input asp-for="SoLuongTon" class="form-control" required />
+                <span asp-validation-for="SoLuongTon" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Lưu Lại" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary btn-sm">QUAY LẠI DANH SÁCH</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
